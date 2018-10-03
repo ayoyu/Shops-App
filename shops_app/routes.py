@@ -1,5 +1,3 @@
-import os
-import sqlite3
 from shops_app import app, bcrypt, db
 from flask import render_template, redirect, url_for, flash, request
 from shops_app.Forms import RegistrationForm, LoginForm
