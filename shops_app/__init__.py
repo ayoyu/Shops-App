@@ -15,7 +15,8 @@ login_manager = LoginManager(app)  # It handles the common tasks of logging in, 
 login_manager.login_view = 'login'
 login_manager.login_message_category = 'info'
 
-from shops_app import routes
 from shops_app import models
+from shops_app import routes
+
 
 

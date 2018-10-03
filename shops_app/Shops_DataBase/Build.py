@@ -6,23 +6,26 @@ conn = sqlite3.connect('shops.db') # make the connection to Shops.db
 c = conn.cursor()
 
 def build_table():
+	# Create the Shops Table
 	c.execute('CREATE TABLE IF NOT EXISTS Shops(id INTEGER PRIMARY KEY,'
 			  'name TEXT ,longitude FLOAT not null,'
 			  'latitude FLOAT not null,'
-			  'adresse TEXT,city TEXT,Email TEXT)') # Create the Shops Table
+			  'adresse TEXT,city TEXT,Email TEXT)')
 	conn.commit()
 
 def insert_into():
 	for shop in data:
 		try:
-			c.execute('INSERT INTO Shops VALUES (?,?,?,?,?,?,?)', (int(shop['id']), shop['nom'],
+			#  insert into the Shops Table the values in the list data
+			c.execute('INSERT INTO Shops VALUES (?,?,?,?,?,?,?)', (int(shop['id']),
+																   shop['nom'],
 																   float(shop['longitude']),
 																   float(shop['latitude']),
 																   shop['Adresse'],
 																   shop['ville'],
-																   shop['email'])) # inserto into the Shops Table the values in the list data
+																   shop['email']))
 			conn.commit()
-		except:
+		except KeyError:
 			continue
 	return True
 

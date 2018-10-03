@@ -27,9 +27,9 @@ class my_preferred_shops(db.Model):
 
 	id = db.Column(db.Integer, primary_key=True)
 	name = db.Column(db.String(16), nullable=False)
-	adresse = db.Column(db.String(160), nullable=False)
+	address = db.Column(db.String(160), nullable=False)
 	city = db.Column(db.String(16))
 	user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
 	def __repr__(self):
-		return f'My_preferred_Shops({self.name},{self.adresse},{self.city})'
+		return f'My_preferred_Shops({self.name},{self.address},{self.city})'

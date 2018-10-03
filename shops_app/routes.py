@@ -1,13 +1,31 @@
+import os
+import sqlite3
 from shops_app import app, bcrypt, db
-from flask import render_template, redirect, url_for, flash
+from flask import render_template, redirect, url_for, flash, request
 from shops_app.Forms import RegistrationForm, LoginForm
 from flask_login import current_user, login_user, logout_user
 from shops_app.models import User
+from shops_app.app_logic import Neraby_Shops
 
 @app.route('/home', methods=['GET', 'POST'])
 def home():
-	return render_template('home.html', title='Home')
+	"""
+	>>> ip = request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
+	
+	provide the IP User address but in the localhost you will get 127.0.0.1, not helpful
+	so to provide the result and see the final app, i will work with the local IP
+	but in the production we must change our Public IP by the Client IP,then request the Freegeo api
+	to have some geo_information about the User (latitude, longitude,...):
 
+	>>> requests.get('http://api.ipstack.com/'+str(ip)+'?access_key=YOUR_KEY_API').json()
+	
+	"""
+
+	nearby = Neraby_Shops()
+
+	return render_template('home.html', title='Home', nearby=nearby)
+
+#  I make the Registration Form as the index Page for the App
 @app.route('/', methods=['GET', 'POST'])
 def Registration():
 	#  checkout if the user is already autenticated
