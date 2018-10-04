@@ -1,7 +1,12 @@
 import requests
 import sqlite3
 
-# Some Shops data in our country
+"""
+Some Optic Shops data in Morrocco with geo_data(latitude, longitude...)
+I am not responsible on the states of this data (About the latitude and Longitude of any shop)
+I chose it just for the demonstration
+
+"""
 data = requests.get('https://kodaklens.ma/Admin/data').json()
 # make the connection to Shops.db
 conn = sqlite3.connect('shops.db')

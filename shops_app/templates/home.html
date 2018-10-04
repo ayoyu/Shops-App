@@ -1,5 +1,20 @@
 {% extends 'layout.html' %}
 {% block content %}
-<h1>{{nearby}}</h1>
+
+{% for item in nearby %}
+<div class="media content-section">
+  <img class="rounded mx-auto d-block" src="{{url_for('static',filename='picture/shop1.png')}}" alt="Generic placeholder image">
+  <div class="media-body">
+    <h5 class="mt-0">{{item[0]}}</h5>
+      From your position : {{item[1]}} Km
+      <div>
+          <button type="button" class="btn btn-danger">Dislike</button>
+          <button type="button" class="btn btn-success">Like</button>
+
+      </div>
+  </div>
+</div>
+{% endfor %}
+
 
 {% endblock content %}
