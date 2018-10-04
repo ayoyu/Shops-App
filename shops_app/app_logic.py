@@ -15,6 +15,7 @@ def geo_info():
 	my_local_ip = get_my_ip()
 	#   go here : https://github.com/apilayer/freegeoip#readme to have your own free API Access Key
 	ipstack_key_api = os.environ.get('GEO_KEY')
+	#  request some geo_data
 	d = requests.get('http://api.ipstack.com/'+str(my_local_ip)+'?access_key='+str(ipstack_key_api)).json()
 	latitude, longitude, city, country = d['latitude'], d['longitude'], d['city'], d['country_name']
 	return {'latitude': latitude, 'longitude': longitude, city: 'city', 'country': country}
