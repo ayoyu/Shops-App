@@ -1,8 +1,10 @@
 import requests
 import sqlite3
 
-data = requests.get('https://kodaklens.ma/Admin/data').json() # Some Shops data in our country
-conn = sqlite3.connect('shops.db') # make the connection to Shops.db
+# Some Shops data in our country
+data = requests.get('https://kodaklens.ma/Admin/data').json()
+# make the connection to Shops.db
+conn = sqlite3.connect('shops.db')
 c = conn.cursor()
 
 def build_table():
