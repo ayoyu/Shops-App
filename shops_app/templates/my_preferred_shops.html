@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+{% block content %}
+{% for item in Shops%}
+    <div class="media content-section">
+        <img class="rounded mx-auto d-block" src="{{url_for('static',filename='picture/shop1.png')}}" alt="Generic placeholder image">
+        <div class="media-body">
+            <h5 class="mt-0">{{item.name}} {{item.address}} {{item.city}} </h5>
+                <div>
+                    <h6 class="mt-0"> {{item.email}} </h6>
+                </div>
+                From your position : Updated later Km
+          <div>
+              <a href="{{ url_for('Remove', removed_id=item.id) }}">
+                  <button type="button" class="btn btn-danger">Remove</button>
+              </a>
+
+          </div>
+        </div>
+    </div>
+{% endfor %}
+
+{% endblock content %}

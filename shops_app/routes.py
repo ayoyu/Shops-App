@@ -3,7 +3,7 @@ from shops_app import app, bcrypt, db
 from flask import render_template, redirect, url_for, flash, request
 from shops_app.Forms import RegistrationForm, LoginForm
 from flask_login import current_user, login_user, logout_user, login_required
-from shops_app.models import User
+from shops_app.models import User, my_preferred_shops
 from shops_app.app_logic import Neraby_Shops
 import sqlite3
 
@@ -11,7 +11,6 @@ import sqlite3
 #  this decoration ensure that the current user is logged in and authenticated before calling the actual home page
 @login_required
 def home():
-
 	nearby = Neraby_Shops()
 	return render_template('home.html', title='Home', nearby=nearby)
 
@@ -63,7 +62,55 @@ def search():
 	conn = sqlite3.connect(path_to_base)
 	c = conn.cursor()
 	#  the search option for a specific shop will be by his name or his address
-	query = c.execute('SELECT * FROM Shops WHERE name=? or adresse=?',(item_search, item_search)).fetchall()
-	return render_template('search.html', title='Search' ,search=query)
+	shop_searched = c.execute('SELECT * FROM Shops WHERE name=? or adresse=?',(item_search, item_search)).fetchone()
+	return render_template('search.html', title='Search' ,search=shop_searched)
 
+nearby_liked = Neraby_Shops()
+@app.route('/Like/<int:shop_id>', methods=['GET', 'POST'])
+def Like(shop_id):
+	current_dir = os.path.dirname(__file__)
+	path_to_base = os.path.join(current_dir, 'Shops_DataBase', 'shops.db')
+	conn = sqlite3.connect(path_to_base)
+	c = conn.cursor()
+	#  query the database based on the shop id liked from the current user
+	liked_shop = c.execute('SELECT * FROM Shops WHERE id=?',(shop_id,)).fetchone()
+	#  filter the table by the name (the name is unique column)
+	exit_in_database = my_preferred_shops.query.filter_by(name=liked_shop[1]).first()
+	#  check if the shop is already in the my_preferred_shops table
+	if exit_in_database:
+		flash('This shop is already exist in your Preferred Shops','danger')
+	else:
+		preferred_shop = my_preferred_shops(name=liked_shop[1],
+											address=liked_shop[4],
+											city=liked_shop[5],
+											email=liked_shop[6],
+											user_id=current_user.id)
+		db.session.add(preferred_shop)
+		db.session.commit()
+		flash('The Shop has been added to your Preferred Shops', 'success')
+	for item in nearby_liked:
+		if item[1][1] == shop_id:
+			nearby_liked.remove(item)
+	return render_template('Like.html', nearby=nearby_liked)
 
+@app.route('/PreferredShops')
+def Preferred_Shops():
+	Shops = my_preferred_shops.query.all()
+	return render_template('my_preferred_shops.html',title='Preferred Shops',Shops=Shops)
+
+@app.route('/Removed/<int:removed_id>',methods=['GET', 'POST'])
+def Remove(removed_id):
+	removed_shop = my_preferred_shops.query.get(removed_id)
+	db.session.delete(removed_shop)
+	db.session.commit()
+	flash('The Shop has been deleted from your Preferred Shops','success')
+	return redirect(url_for('Preferred_Shops'))
+
+nearby_disliked = Neraby_Shops()
+@app.route('/Dislike/<int:shop_id>')
+def Dislike(shop_id):
+	for item in nearby_disliked:
+		if item[1][1] == shop_id:
+			nearby_disliked.remove(item)
+
+	return render_template('Dislike.html', nearby=nearby_disliked)

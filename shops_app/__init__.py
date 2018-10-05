@@ -16,6 +16,8 @@ login_manager = LoginManager(app)  # It handles the common tasks of logging in, 
 login_manager.login_view = 'login'
 #  Customize the login message
 login_manager.login_message_category = 'info'
+#  to use the zip function : iterate through two lists together on the same time
+#app.jinja_env.filters['zip'] = zip
 
 from shops_app import models
 from shops_app import routes

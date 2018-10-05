@@ -4,6 +4,7 @@ import requests
 from math import sin, cos, sqrt, atan2, radians
 import sqlite3
 
+
 #  a Function to get your Public IP (server side)
 def get_my_ip():
 	my_ip = urlopen('http://ip.42.pl/raw').read()
@@ -71,13 +72,12 @@ def Neraby_Shops():
 	my_point = (my_position['longitude'], my_position['latitude'])
 	for shop in cursor_iterator:
 		Point_shop = (shop[2], shop[3])
-		#  make a custom identification for every shop
 		#  index: 1=> name  4=> address  5=> city  6=> Email
 		key = ' '.join([str(shop[1]), str(shop[4]), str(shop[5]), str(shop[6])])
 		#  calculate the distance between my_point and a shop position
-		dist[key] = round(haversine_distance(Point_shop, my_point),2)
+		dist[key] = (round(haversine_distance(Point_shop, my_point),2),shop[0])
 	#  sorted the dictionary by the distance asc
-	nearby = sorted(dist.items(), key=lambda x: x[1])
+	nearby = sorted(dist.items(), key=lambda x: x[1][0])
 	return nearby
 
 
