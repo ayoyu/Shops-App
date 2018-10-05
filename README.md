@@ -31,6 +31,7 @@ I chose to construct my *Shops.db* basing on the information delivered by: https
 - [x] As a User, I can dislike a shop, so it won’t be displayed within “Nearby Shops” list 
 - [x] As a User, I can display the list of preferred shops
 - [x] As a User, I can remove a shop from my preferred shops list
+- [x] As a User, I can search a shop by his name or address or city or his Email
 
 ### Built With :
 - Python 3.6.x
