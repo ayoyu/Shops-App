@@ -1,14 +1,16 @@
 import os
-from urllib.request import urlopen
 import requests
 from math import sin, cos, sqrt, atan2, radians
 import sqlite3
+import ipgetter
 
-
-#  a Function to get your Public IP (server side)
+"""
+a Function to get your Public IP (server side)
+ipgetter module : picks your IP randomly from a server list to minimize request overhead on a single server.
+				  https://github.com/phoemur/ipgetter
+"""
 def get_my_ip():
-	my_ip = urlopen('http://ip.42.pl/raw').read()
-	my_ip = my_ip.decode('utf-8')
+	my_ip = ipgetter.myip()
 	return my_ip
 
 """

@@ -1,23 +1,23 @@
 {% extends 'layout.html' %}
 {% block content %}
-{% for item in nearby %}
+    {% for item in nearby %}
 
-<div class="media content-section">
-  <img class="rounded mx-auto d-block" src="{{url_for('static',filename='picture/shop1.png')}}" alt="Generic placeholder image">
-  <div class="media-body">
-    <h5 class="mt-0">{{item[0]}}</h5>
-      From your position : {{item[1][0]}} Km
-      <div>
-          <a href="{{url_for('Dislike', shop_id=item[1][1])}}">
-              <button type="button" class="btn btn-danger">Dislike</button>
-          </a>
-          <a href="{{url_for('Like', shop_id=item[1][1])}}" name="like">
-              <button type="button" class="btn btn-success">Like</button>
-          </a>
+        <div class="media content-section">
+          <img class="rounded mx-auto d-block" src="{{url_for('static',filename='picture/shop1.png')}}" alt="Generic placeholder image">
+          <div class="media-body">
+            <h5 class="mt-0">{{item[0]}}</h5>
+              From your position : {{item[1][0]}} Km
+              <div>
+                  <a href="{{url_for('Dislike', shop_id=item[1][1])}}">
+                      <button type="button" class="btn btn-danger">Dislike</button>
+                  </a>
+                  <a href="{{url_for('Like', shop_id=item[1][1])}}" name="like">
+                      <button type="button" class="btn btn-success">Like</button>
+                  </a>
 
 
-      </div>
-  </div>
-</div>
-{% endfor %}
+              </div>
+          </div>
+        </div>
+    {% endfor %}
 {% endblock content %}

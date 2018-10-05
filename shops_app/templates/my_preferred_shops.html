@@ -1,22 +1,33 @@
 {% extends 'layout.html' %}
 {% block content %}
-{% for item in Shops%}
-    <div class="media content-section">
-        <img class="rounded mx-auto d-block" src="{{url_for('static',filename='picture/shop1.png')}}" alt="Generic placeholder image">
-        <div class="media-body">
-            <h5 class="mt-0">{{item.name}} {{item.address}} {{item.city}} </h5>
-                <div>
-                    <h6 class="mt-0"> {{item.email}} </h6>
-                </div>
-                From your position : Updated later Km
-          <div>
-              <a href="{{ url_for('Remove', removed_id=item.id) }}">
-                  <button type="button" class="btn btn-danger">Remove</button>
-              </a>
+    {% for item in Shops.items%}
+        <div class="media content-section">
+            <img class="rounded mx-auto d-block" src="{{url_for('static',filename='picture/shop1.png')}}" alt="Generic placeholder image">
+            <div class="media-body">
+                <h5 class="mt-0">{{item.name}} {{item.address}} {{item.city}} </h5>
+                    <div>
+                        <h6 class="mt-0"> {{item.email}} </h6>
+                    </div>
+                    From your position : Updated later Km
+              <div>
+                  <a href="{{ url_for('Remove', removed_id=item.id) }}">
+                      <button type="button" class="btn btn-danger">Remove</button>
+                  </a>
 
-          </div>
+              </div>
+            </div>
         </div>
-    </div>
-{% endfor %}
+    {% endfor %}
+    {% for num_page in Shops.iter_pages(left_edge=1,right_edge=1,left_current=1,right_current=2) %}
+            {% if num_page %}
+                {%if Shops.page == num_page %}
+                    <a class="btn btn-info mb-4" href="{{url_for('Preferred_Shops',page=num_page)}}">{{ num_page }}</a>
+                {% else %}
+                    <a class="btn btn-outline-info mb-4" href="{{url_for('Preferred_Shops',page=num_page)}}">{{ num_page }}</a>
+                {% endif %}
+            {% else %}
+                ...
+            {% endif %}
+    {% endfor %}
 
 {% endblock content %}

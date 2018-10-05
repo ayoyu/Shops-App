@@ -62,7 +62,10 @@ def search():
 	conn = sqlite3.connect(path_to_base)
 	c = conn.cursor()
 	#  the search option for a specific shop will be by his name or his address
-	shop_searched = c.execute('SELECT * FROM Shops WHERE name=? or adresse=?',(item_search, item_search)).fetchone()
+	shop_searched = c.execute('SELECT * FROM Shops WHERE name=? or adresse=? or city=? or Email=?', (item_search, item_search, item_search, item_search)).fetchone()
+	if not shop_searched:
+		flash(f"Sorry!!! we don't found {item_search} in our Database", 'danger')
+		return redirect(url_for('home'))
 	return render_template('search.html', title='Search' ,search=shop_searched)
 
 nearby_liked = Neraby_Shops()
@@ -75,7 +78,7 @@ def Like(shop_id):
 	#  query the database based on the shop id liked from the current user
 	liked_shop = c.execute('SELECT * FROM Shops WHERE id=?',(shop_id,)).fetchone()
 	#  filter the table by the name (the name is unique column)
-	exit_in_database = my_preferred_shops.query.filter_by(name=liked_shop[1]).first()
+	exit_in_database = my_preferred_shops.query.filter_by(name=liked_shop[1], author=current_user).first()
 	#  check if the shop is already in the my_preferred_shops table
 	if exit_in_database:
 		flash('This shop is already exist in your Preferred Shops','danger')
@@ -84,7 +87,7 @@ def Like(shop_id):
 											address=liked_shop[4],
 											city=liked_shop[5],
 											email=liked_shop[6],
-											user_id=current_user.id)
+											author=current_user)
 		db.session.add(preferred_shop)
 		db.session.commit()
 		flash('The Shop has been added to your Preferred Shops', 'success')
@@ -95,7 +98,8 @@ def Like(shop_id):
 
 @app.route('/PreferredShops')
 def Preferred_Shops():
-	Shops = my_preferred_shops.query.all()
+	page = request.args.get('page', 1, type=int)
+	Shops = my_preferred_shops.query.filter_by(user_id=current_user.id).paginate(page=page, per_page=3)
 	return render_template('my_preferred_shops.html',title='Preferred Shops',Shops=Shops)
 
 @app.route('/Removed/<int:removed_id>',methods=['GET', 'POST'])

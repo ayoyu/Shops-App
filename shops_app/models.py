@@ -26,7 +26,7 @@ class User(db.Model, UserMixin):
 class my_preferred_shops(db.Model):
 
 	id = db.Column(db.Integer, primary_key=True)
-	name = db.Column(db.String(30), nullable=False, unique=True)
+	name = db.Column(db.String(30), nullable=False)
 	address = db.Column(db.String(160), nullable=False)
 	city = db.Column(db.String(16))
 	email = db.Column(db.String(120))
