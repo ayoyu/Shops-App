@@ -36,23 +36,25 @@ I chose to construct my *Shops.db* basing on the information delivered by: https
 ### Built With :
 - Python 3.6.x
 - Flask - The web framework used.
-- Bootstrap - front-end framework. https://getbootstrap.com/ 
+- Bootstrap - front-end framework. https://getbootstrap.com/
 
-### Test : 
-create a Folder and type,in your Terminal :
-    
+### Requirements :
+Need to Install [docker](https://docs.docker.com/v17.09/engine/installation/#updates-and-patches) 
+
+### Test in your localhost (http://localhost:7000/): 
+
 - step 1: 
 ```
 $ git clone https://github.com/ayoyu/Shops-App
 ```
-- step2 : 
+- step2 (create the image): 
 
 ```
-$ pip install -r requirements.txt
+$ docker build -t shops_app .
 ```
-- step 3 :
+- step 3 (run the container):
 ```
-$ python run.py
+$ docker run -d -p 7000:7000 shops_app
 ```
 ### Authors :
  
