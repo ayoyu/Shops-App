@@ -2,7 +2,7 @@ import os
 import requests
 from math import sin, cos, sqrt, atan2, radians
 import sqlite3
-import ipgetter
+from .ipgetter.ipgetter import myip
 
 """
 a Function to get your Public IP (server side)
@@ -10,7 +10,7 @@ ipgetter module : picks your IP randomly from a server list to minimize request 
 				  https://github.com/phoemur/ipgetter
 """
 def get_my_ip():
-	my_ip = ipgetter.myip()
+	my_ip = myip()
 	return my_ip
 
 """
