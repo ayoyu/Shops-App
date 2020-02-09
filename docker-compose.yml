@@ -1,0 +1,23 @@
+version: "3.7"
+
+services:
+
+  shopsweb:
+    build: ./shopsweb
+    container_name: shopsweb
+    restart: always
+    environment:
+      - APP_NAME=NearbyShops
+    expose:
+      - 8080
+    volumes:
+      - $PWD/logs:/app/logs
+
+  shopsnginx:
+    build: ./shopsnginx
+    container_name: shopsnginx
+    restart: always
+    ports:
+      - "8083:80"
+    volumes:
+      - $PWD/nginx_logs:/var/log/nginx               
