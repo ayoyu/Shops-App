@@ -39,23 +39,38 @@ I chose to construct my *Shops.db* basing on the information delivered by: https
 - Bootstrap - front-end framework. https://getbootstrap.com/
 
 ### Requirements :
-Need to Install [docker](https://docs.docker.com/v17.09/engine/installation/#updates-and-patches) 
+- Need to Install:
+	- [docker](https://docs.docker.com/v17.09/engine/installation/#updates-and-patches)
+	- [docker-compose](https://docs.docker.com/compose/install/) 
 
-### Test in your localhost (http://localhost:7000/): 
+### Test in your localhost (http://localhost:8083/): 
 
 - step 1: 
 ```
 $ git clone https://github.com/ayoyu/Shops-App
 ```
-- step2 (create the image): 
+- step2 (build the services): 
 
 ```
-$ docker build -t shops_app .
+$ docker-compose build
 ```
-- step 3 (run the container):
+- step 3 (launch the services):
 ```
-$ docker run -d -p 7000:7000 shops_app
+$ docker-compose up -d
 ```
+- step 4 (make sure the services are UP):
+```
+$ docker-compose ps
+
+   Name            Command          State          Ports        
+----------------------------------------------------------------
+shopsnginx   nginx -g daemon off;   Up      0.0.0.0:8083->80/tcp
+shopsweb     uwsgi shops_app.ini    Up      8080/tcp            
+
+```
+### TO DO:
+- Create a Posgresql service for the database server instead of using SQLite
+
 ### Authors :
  
 - **Ayoub El khallioui**

@@ -6,4 +6,6 @@ WORKDIR ./app
 
 RUN pip install -r requirements.txt
 
-CMD ["python", "run.py"]
+RUN mkdir logs
+
+CMD ["uwsgi", "shops_app.ini"]

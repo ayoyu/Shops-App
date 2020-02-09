@@ -1,3 +1,5 @@
-shops_app/__pycache__
-shops_app/ipgetter/__pycache_
-myenv/
+ShopsWeb/shops_app/__pycache__
+shops_app/ipgetter/__pycache__
+ShopsWeb/myenv/
+logs/
+nginx_logs/
