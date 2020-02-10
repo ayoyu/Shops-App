@@ -1,14 +1,10 @@
-# Optic-Shops-App
+# Nearby Optic Shops Application
 
-implementing an app that lists shops nearby.
+Implementing an app that lists shops nearby with the Stack
+Flask+Uwsgi+Nginx+docker+docker-compose+Postgresql+Bootstrap
 
 ### Logic Application :
-the Application consist of give you the optic shops nearby,rely on your local public IP address.
-
-but in production we must change that local IP address by the User public IP.
-
-the Problem that in the development phase if we work with the Client IP, the result will give us always 127.0.0.1 because we are behind a proxy.
-  
+the Application consist of give you the optic shops nearby, rely on the User public IP address.
 
 **(you will find the explanation in the *app_logic.py* Script)**
 
@@ -35,8 +31,12 @@ I chose to construct my *Shops.db* basing on the information delivered by: https
 
 ### Built With :
 - Python 3.6.x
-- Flask - The web framework used.
-- Bootstrap - front-end framework. https://getbootstrap.com/
+- [Flask](https://flask.palletsprojects.com/en/1.1.x/)
+- [Bootstrap](https://getbootstrap.com/)
+- [docker](https://www.docker.com/) && [docker-compose](https://docs.docker.com/compose/)
+- [Uwsgi](https://uwsgi-docs.readthedocs.io/en/latest/)
+- [Nginx](https://www.nginx.com/)
+- [Postgresql](https://www.postgresql.org/)
 
 ### Requirements :
 - Need to Install:
@@ -68,8 +68,27 @@ shopsnginx   nginx -g daemon off;   Up      0.0.0.0:8083->80/tcp
 shopsweb     uwsgi shops_app.ini    Up      8080/tcp            
 
 ```
-### TO DO:
-- Create a Posgresql service for the database server instead of using SQLite
+- step 5 (create tables for the database server)
+```
+$ docker-compose exec shopsweb python manage.py create_db
+```
+- step 6 (make sure tables are created):
+```
+$ docker exec -it shopsdb psql -U postgres
+
+postgres=# \conninfo
+You are connected to database "postgres" as user "postgres" via socket in "/var/run/postgresql" at port "5432".
+postgres=# \c shops
+You are now connected to database "shops" as user "postgres".
+shops=# \dt
+               List of relations
+ Schema |        Name        | Type  |  Owner   
+--------+--------------------+-------+----------
+ public | my_preferred_shops | table | postgres
+ public | user               | table | postgres
+(2 rows)
+
+```
 
 ### Authors :
  

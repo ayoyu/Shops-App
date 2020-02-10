@@ -1,11 +1,22 @@
+import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
+from dotenv import load_dotenv
 
+
+current_dir = os.path.realpath(os.path.dirname(__file__))
+env_path = os.path.join(current_dir, '../.env')
+load_dotenv(env_path)
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///base.db'
-app.config['SECRET_KEY'] = '4b9826ffe47fde764229508d00b141d5928b4a27'
+POSTGRES_USER = os.getenv('POSTGRES_USER')
+POSTGRES_PASSWORD = os.getenv('POSTGRES_PASSWORD')
+POSTGRES_DB = os.getenv('POSTGRES_DB')
+HOST = os.getenv('HOST')
+PORT = os.getenv('PORT')
+app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{HOST}:{PORT}/{POSTGRES_DB}'
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 
 db = SQLAlchemy(app)  # our database
 bcrypt = Bcrypt(app)  # for generation password_hash for User

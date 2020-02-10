@@ -12,6 +12,8 @@ services:
       - 8080
     volumes:
       - $PWD/logs:/app/logs
+    depends_on:
+      - shopsdb
 
   shopsnginx:
     build: ./shopsnginx
@@ -20,4 +22,15 @@ services:
     ports:
       - "8083:80"
     volumes:
-      - $PWD/nginx_logs:/var/log/nginx               
+      - $PWD/nginx_logs:/var/log/nginx
+
+  shopsdb:
+    image: postgres:12.0-alpine
+    container_name: shopsdb
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - ./.env.db
+
+volumes:
+  postgres_data:               
