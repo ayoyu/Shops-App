@@ -1,9 +1,11 @@
 from shops_app import db, login_manager, app
 from flask_login import UserMixin
 
+
 @login_manager.user_loader
 def load_user(user_id):
 	return User.query.get(int(user_id))
+
 
 class User(db.Model, UserMixin):
 	"""
@@ -20,8 +22,10 @@ class User(db.Model, UserMixin):
 	# one-to-many a user can have a lot of preferred shops
 	shops = db.relationship('my_preferred_shops', backref='author', lazy=True)
 
+	
 	def __repr__(self):
 		return f'User({self.id},{self.email})'
+
 
 class my_preferred_shops(db.Model):
 
@@ -32,5 +36,6 @@ class my_preferred_shops(db.Model):
 	email = db.Column(db.String(120))
 	user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
+	
 	def __repr__(self):
 		return f'My_preferred_Shops({self.name},{self.address},{self.city})'

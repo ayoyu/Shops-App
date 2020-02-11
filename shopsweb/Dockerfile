@@ -12,8 +12,10 @@ WORKDIR ./app
 
 RUN pip install --no-cache-dir -r requirements.txt
 
+# create logs directory for uwsgi logs & docker volume 
 RUN mkdir logs
 
+# set FLASK_APP for creating tables with SQLAlchemy
 ENV FLASK_APP=run.py
 
 CMD ["uwsgi", "shops_app.ini"]
