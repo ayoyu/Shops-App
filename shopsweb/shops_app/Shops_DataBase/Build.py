@@ -12,6 +12,7 @@ data = requests.get('https://kodaklens.ma/Admin/data').json()
 conn = sqlite3.connect('shops.db')
 c = conn.cursor()
 
+
 def build_table():
 	# Create the Shops Table
 	c.execute('CREATE TABLE IF NOT EXISTS Shops(id INTEGER PRIMARY KEY,'
@@ -19,6 +20,7 @@ def build_table():
 			  'latitude FLOAT not null,'
 			  'adresse TEXT,city TEXT,Email TEXT)')
 	conn.commit()
+
 
 def insert_into():
 	for shop in data:
@@ -39,5 +41,3 @@ def insert_into():
 if __name__ == '__main__':
 	build_table()
 	insert_into()
-
-

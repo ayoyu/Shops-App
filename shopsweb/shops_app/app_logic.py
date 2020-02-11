@@ -4,6 +4,7 @@ from math import sin, cos, sqrt, atan2, radians
 import sqlite3
 from .ipgetter.ipgetter import myip
 
+
 """
 a Function to get your Public IP (server side)
 ipgetter module : picks your IP randomly from a server list to minimize request overhead on a single server.
@@ -61,6 +62,7 @@ def haversine_distance(Point1, Point2):
 	distance = R * c
 	return distance
 
+
 def Neraby_Shops():
 	#  get my position ( local IP )
 	my_position = geo_info()
@@ -81,7 +83,3 @@ def Neraby_Shops():
 	#  sorted the dictionary by the distance asc
 	nearby = sorted(dist.items(), key=lambda x: x[1][0])
 	return nearby
-
-
-
-

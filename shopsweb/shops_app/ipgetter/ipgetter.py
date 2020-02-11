@@ -102,6 +102,7 @@ class IPgetter(object):
                             'https://api.ipify.org',
                             'https://v4.ident.me']
 
+    
     def get_externalip(self):
         '''
         This function gets your IP from a random server
@@ -116,6 +117,7 @@ class IPgetter(object):
                 continue
         return ''
 
+    
     def fetch(self, server):
         '''
         This function gets your IP from a specific server.
@@ -152,6 +154,7 @@ class IPgetter(object):
             if url:
                 url.close()
 
+    
     def test(self):
         '''
         This functions tests the consistency of the servers
@@ -171,6 +174,7 @@ class IPgetter(object):
             print('{0} = {1} ocurrenc{2}'.format(ip if len(ip) > 0 else 'broken server', ocorrencia, 'y' if ocorrencia == 1 else 'ies'))
         print('\n')
         print(resultdict)
+
 
 if __name__ == '__main__':
     print(myip())

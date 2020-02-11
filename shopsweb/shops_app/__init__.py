@@ -32,6 +32,3 @@ login_manager.login_message_category = 'info'
 
 from shops_app import models
 from shops_app import routes
-
-
-
