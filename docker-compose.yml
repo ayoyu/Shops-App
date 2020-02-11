@@ -27,6 +27,7 @@ services:
   shopsdb:
     image: postgres:12.0-alpine
     container_name: shopsdb
+    restart: always
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     env_file:
